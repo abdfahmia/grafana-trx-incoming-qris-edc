@@ -1,0 +1,2251 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 47,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "panels": [],
+        "title": "Transaksi QRIS",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "id": 2,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "<CENTER>\n<p style=\"background-color:#001852;\"><b><font size=\"5\" color=\"#fffff\">\nTransaction QRIS Realtime\n</font></b></p>\n</CENTER>",
+          "mode": "html"
+        },
+        "pluginVersion": "10.0.2",
+        "transparent": true,
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "-- Mixed --"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisGridShow": true,
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 2,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Inflow"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#27727b",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Outflow"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#fcce10",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Selisih Frekuensi"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "semi-dark-red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 3
+        },
+        "id": 13,
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "alias": "Inflow",
+            "bucketAggs": [
+              {
+                "field": "trx_datetime",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b58f254a-c539-4b64-b5bd-29f83748dd28"
+            },
+            "metrics": [
+              {
+                "id": "1",
+                "type": "count"
+              }
+            ],
+            "query": "NOT cpan_code: \"93600002\" AND resp_code: \"00\" AND trx_type: \"2\"",
+            "refId": "A",
+            "timeField": "@timestamp"
+          },
+          {
+            "alias": "Outflow",
+            "bucketAggs": [
+              {
+                "field": "TransactionDatetime",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "ad5923ec-b188-44df-bea2-49909812800c"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "id": "1",
+                "type": "count"
+              }
+            ],
+            "query": "Responsecode :\"00\"",
+            "refId": "B",
+            "timeField": "TransactionDatetime"
+          }
+        ],
+        "title": "Frekuensi Selisih Inflow Outflow Transaksi QRIS Realtime (Ribu Transaksi) ",
+        "transformations": [
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "Selisih Frekuensi",
+              "binary": {
+                "left": "Inflow",
+                "operator": "-",
+                "reducer": "sum",
+                "right": "Outflow"
+              },
+              "mode": "binary",
+              "reduce": {
+                "reducer": "sum"
+              }
+            }
+          }
+        ],
+        "transparent": true,
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "-- Mixed --"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisGridShow": true,
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 9,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Inflow"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#27727b",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Outflow"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#fcce10",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Selisih Volume"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "semi-dark-red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 3
+        },
+        "id": 14,
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "alias": "Inflow",
+            "bucketAggs": [
+              {
+                "field": "trx_datetime",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b58f254a-c539-4b64-b5bd-29f83748dd28"
+            },
+            "metrics": [
+              {
+                "field": "trx_amount_fix",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "NOT cpan_code: \"93600002\" AND resp_code: \"00\" AND trx_type: \"2\"",
+            "refId": "A",
+            "timeField": "@timestamp"
+          },
+          {
+            "alias": "Outflow",
+            "bucketAggs": [
+              {
+                "field": "TransactionDatetime",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "ad5923ec-b188-44df-bea2-49909812800c"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "data_REQUEST_transactionAmount",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "Responsecode :\"00\"",
+            "refId": "B",
+            "timeField": "TransactionDatetime"
+          }
+        ],
+        "title": "Volume Selisih Inflow Outflow Transaksi QRIS Realtime (Rp Milyar) ",
+        "transformations": [
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "Selisih Volume",
+              "binary": {
+                "left": "Inflow",
+                "operator": "-",
+                "reducer": "sum",
+                "right": "Outflow"
+              },
+              "mode": "binary",
+              "reduce": {
+                "reducer": "sum"
+              }
+            }
+          }
+        ],
+        "transparent": true,
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 11
+        },
+        "id": 12,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "<CENTER>\n<p style=\"background-color:#001852;\"><b><font size=\"5\" color=\"#fffff\">\nTransaction QRIS Daily\n</font></b></p>\n</CENTER>",
+          "mode": "html"
+        },
+        "pluginVersion": "10.0.2",
+        "transparent": true,
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "mssql",
+          "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 0,
+          "y": 13
+        },
+        "id": 15,
+        "options": {
+          "baidu": {
+            "callback": "bmapReady",
+            "key": ""
+          },
+          "editor": {
+            "format": "auto",
+            "height": 600
+          },
+          "editorMode": "visual",
+          "gaode": {
+            "key": "",
+            "plugin": "AMap.Scale,AMap.ToolBar"
+          },
+          "getOption": "const series = data.series.map((s) => {\n  const sData = s.fields.find((f) => f.type === 'number').values.buffer || s.fields.find((f) => f.type === 'number').values;\n  const sTime = s.fields.find((f) => f.type === 'time').values.buffer || s.fields.find((f) => f.type === 'time').values;\n  \n  return {\n    name: s.refId,\n    type: 'line',\n    showSymbol: false,\n    areaStyle: {\n      opacity: 0.1,\n    },\n    lineStyle: {\n      width: 1,\n    },\n    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),\n  };\n});\n\n/**\n * Enable Data Zoom by default\n */\nsetTimeout(() => echartsInstance.dispatchAction({\n  type: 'takeGlobalCursor',\n  key: 'dataZoomSelect',\n  dataZoomSelectActive: true,\n}), 500);\n\n/**\n * Update Time Range on Zoom\n */\nechartsInstance.on('datazoom', function (params) {\n  const startValue = params.batch[0]?.startValue;\n  const endValue = params.batch[0]?.endValue;\n  locationService.partial({ from: startValue, to: endValue });\n});\n\nreturn {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n  },\n  legend: {\n    left: '0',\n    bottom: '0',\n    data: data.series.map((s) => s.refId),\n    textStyle: {\n      color: 'rgba(128, 128, 128, .9)',\n    },\n  },\n  toolbox: {\n    feature: {\n      dataZoom: {\n        yAxisIndex: 'none',\n        icon: {\n          zoom: 'path://',\n          back: 'path://',\n        },\n      },\n      saveAsImage: {},\n    }\n  },\n  xAxis: {\n    type: 'time',\n  },\n  yAxis: {\n    type: 'value',\n    min: 'dataMin',\n  },\n  grid: {\n    left: '2%',\n    right: '2%',\n    top: '2%',\n    bottom: 24,\n    containLabel: true,\n  },\n  series,\n};",
+          "google": {
+            "callback": "gmapReady",
+            "key": ""
+          },
+          "map": "none",
+          "renderer": "canvas",
+          "themeEditor": {
+            "config": "{\r\n  \"color\": [\r\n    \"#27727b\",\r\n    \"#fcce10\",\r\n    \"#c1232b\",\r\n    \"#e87c25\",\r\n    \"#b5c334\",\r\n    \"#fe8463\",\r\n    \"#9bca63\",\r\n    \"#fad860\",\r\n    \"#f3a43b\",\r\n    \"#60c0dd\",\r\n    \"#d7504b\",\r\n    \"#c6e579\",\r\n    \"#f4e001\",\r\n    \"#f0805a\",\r\n    \"#26c0c0\"\r\n  ],\r\n  \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n  \"textStyle\": {},\r\n  \"title\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#27727b\"\r\n    },\r\n    \"subtextStyle\": {\r\n      \"color\": \"#aaaaaa\"\r\n    }\r\n  },\r\n  \"line\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"radar\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"bar\": {\r\n    \"itemStyle\": {\r\n      \"barBorderWidth\": 0,\r\n      \"barBorderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"pie\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"scatter\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"boxplot\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"parallel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"sankey\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"funnel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"gauge\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"candlestick\": {\r\n    \"itemStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"color0\": \"#b5c334\",\r\n      \"borderColor\": \"#c1232b\",\r\n      \"borderColor0\": \"#b5c334\",\r\n      \"borderWidth\": 1\r\n    }\r\n  },\r\n  \"graph\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": 1,\r\n      \"color\": \"#aaa\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false,\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#27727b\",\r\n      \"#fcce10\",\r\n      \"#e87c25\",\r\n      \"#b5c334\",\r\n      \"#fe8463\",\r\n      \"#9bca63\",\r\n      \"#fad860\",\r\n      \"#f3a43b\",\r\n      \"#60c0dd\",\r\n      \"#d7504b\",\r\n      \"#c6e579\",\r\n      \"#f4e001\",\r\n      \"#f0805a\",\r\n      \"#26c0c0\"\r\n    ],\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    }\r\n  },\r\n  \"map\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"geo\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"categoryAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"valueAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ffffff\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"logAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"timeAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"toolbox\": {\r\n    \"iconStyle\": {\r\n      \"borderColor\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"iconStyle\": {\r\n        \"borderColor\": \"#e87c25\"\r\n      }\r\n    }\r\n  },\r\n  \"legend\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#333333\"\r\n    }\r\n  },\r\n  \"tooltip\": {\r\n    \"axisPointer\": {\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      },\r\n      \"crossStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      }\r\n    }\r\n  },\r\n  \"timeline\": {\r\n    \"lineStyle\": {\r\n      \"color\": \"#293c55\",\r\n      \"width\": 1\r\n    },\r\n    \"itemStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderWidth\": 1\r\n    },\r\n    \"controlStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderColor\": \"#27727b\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"checkpointStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"borderColor\": \"#c23531\"\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#293c55\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"color\": \"#72d4e0\"\r\n      },\r\n      \"controlStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"borderColor\": \"#27727b\",\r\n        \"borderWidth\": 0.5\r\n      },\r\n      \"label\": {\r\n        \"color\": \"#293c55\"\r\n      }\r\n    }\r\n  },\r\n  \"visualMap\": {\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#fcce10\"\r\n    ]\r\n  },\r\n  \"dataZoom\": {\r\n    \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n    \"dataBackgroundColor\": \"rgba(181,195,52,0.3)\",\r\n    \"fillerColor\": \"rgba(181,195,52,0.2)\",\r\n    \"handleColor\": \"#27727b\",\r\n    \"handleSize\": \"100%\",\r\n    \"textStyle\": {\r\n      \"color\": \"#999999\"\r\n    }\r\n  },\r\n  \"markPoint\": {\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    },\r\n    \"emphasis\": {\r\n      \"label\": {\r\n        \"color\": \"#eee\"\r\n      }\r\n    }\r\n  }\r\n}",
+            "height": 400,
+            "name": "custom"
+          },
+          "visualEditor": {
+            "code": "console.log(context);\n\n// Extracting data from the dataset\nvar categoryData = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[0];\n});\n\nvar metricsData1 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[1];\n});\n\nvar metricsData2 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[2];\n});\n\nvar metricsData3 = [];\nfor (var i = 0; i < metricsData1.length; i++) {\n  var diff = metricsData1[i] - metricsData2[i];\n  metricsData3.push(diff);\n}\n\nreturn {\n  dataset: context.editor.dataset,\n  xAxis: {\n    type: 'category',\n    data: categoryData\n  },\n  yAxis: {\n    type: 'value'\n  },\n  series: [\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Frekeunsi Transaksi QRIS Inflow  (Ribu Transaksi)\",\n      data: metricsData1,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Frekeunsi Transaksi QRIS Outflow  (Ribu Transaksi)\",\n      data: metricsData2,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Selisih Transaksi QRIS (Ribu Transaksi)\",\n      data: metricsData3,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    }\n  ],\n  tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n      type: 'shadow'\n    }\n  },\n};\n",
+            "codeHeight": 408,
+            "dataset": [
+              {
+                "name": "trx_date",
+                "source": "A"
+              },
+              {
+                "name": "metrics_value",
+                "source": "A"
+              },
+              {
+                "name": "metrics_value",
+                "source": "B"
+              }
+            ],
+            "series": [
+              {
+                "id": "Data",
+                "name": "Data",
+                "type": "bar",
+                "uid": "0c4eabb4-6d9c-4a39-96ae-1fc5f23eed6f"
+              },
+              {
+                "encode": {
+                  "x": [],
+                  "y": []
+                },
+                "id": "Data2",
+                "name": "",
+                "type": "line",
+                "uid": "e70da15c-57b9-490d-90da-d8df27ca3c35"
+              }
+            ]
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "with  a as (\r\n  SELECT \r\n    --CONVERT(VARCHAR(10),trx_date,120) trx_date\r\n    trx_date\r\n    ,convert(decimal(18,2),SUM(jumlah_transaksi)/1000) transaction_frequency\r\n  FROM [QRIS].[dbo].[incoming_QRIS_EXT_BRI_DAILY]\r\n  WHERE \r\n    DATEDIFF(DAY,trx_date,GETDATE()) < 30 \r\n  GROUP BY \r\n    trx_date\r\n    --CONVERT(VARCHAR(10),trx_date,120)\r\n)\r\nselect \r\n  SUBSTRING(CONVERT(VARCHAR,trx_date,105),1,2) trx_date\r\n  ,transaction_frequency metrics_value\r\nfrom a\r\norder by a.trx_date",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          },
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "with  a as (\r\n  SELECT \r\n    --CONVERT(VARCHAR(10),TANGGAL_TRANSAKSI,120) trx_date\r\n    TANGGAL_TRANSAKSI\r\n    ,convert(decimal(18,2),SUM(TRANSACTION_TOTAL)/1000) transaction_frequency\r\n  FROM QRIS.dbo.TRANSAKSI_MPM_OFF_US_SUMMARY_DAILY_SUCCESS_ONLY\r\n  WHERE \r\n    DATEDIFF(DAY,TANGGAL_TRANSAKSI,GETDATE()) < 30 \r\n  GROUP BY \r\n    TANGGAL_TRANSAKSI\r\n    --CONVERT(VARCHAR(10),TANGGAL_TRANSAKSI,120)\r\n)\r\nselect \r\n  SUBSTRING(CONVERT(VARCHAR,TANGGAL_TRANSAKSI,105),1,2) trx_date\r\n  ,transaction_frequency metrics_value\r\nfrom a\r\norder by a.TANGGAL_TRANSAKSI",
+            "refId": "B",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Frekuensi Selisih Inflow Outflow Transaksi QRIS Daily (Ribu Transaksi) ",
+        "transparent": true,
+        "type": "volkovlabs-echarts-panel"
+      },
+      {
+        "datasource": {
+          "type": "mssql",
+          "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 12,
+          "y": 13
+        },
+        "id": 16,
+        "options": {
+          "baidu": {
+            "callback": "bmapReady",
+            "key": ""
+          },
+          "editor": {
+            "format": "auto",
+            "height": 600
+          },
+          "editorMode": "visual",
+          "gaode": {
+            "key": "",
+            "plugin": "AMap.Scale,AMap.ToolBar"
+          },
+          "getOption": "const series = data.series.map((s) => {\n  const sData = s.fields.find((f) => f.type === 'metrics_value').values.buffer || s.fields.find((f) => f.type === 'metrics_value').values;\n  const sTime = s.fields.find((f) => f.type === 'trx_date').values.buffer || s.fields.find((f) => f.type === 'trx_date').values;\n\n  return {\n    name: s.refId,\n    type: 'line',\n    showSymbol: false,\n    areaStyle: {\n      opacity: 0.1,\n    },\n    lineStyle: {\n      width: 1,\n    },\n    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),\n  };\n});\n\n/**\n * Enable Data Zoom by default\n */\nsetTimeout(() => echartsInstance.dispatchAction({\n  type: 'takeGlobalCursor',\n  key: 'dataZoomSelect',\n  dataZoomSelectActive: true,\n}), 500);\n\n/**\n * Update Time Range on Zoom\n */\nechartsInstance.on('datazoom', function (params) {\n  const startValue = params.batch[0]?.startValue;\n  const endValue = params.batch[0]?.endValue;\n  locationService.partial({ from: startValue, to: endValue });\n});\n\nreturn {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n  },\n  legend: {\n    left: '0',\n    bottom: '0',\n    data: data.series.map((s) => s.refId),\n    textStyle: {\n      color: 'rgba(128, 128, 128, .9)',\n    },\n  },\n  toolbox: {\n    feature: {\n      dataZoom: {\n        yAxisIndex: 'none',\n        icon: {\n          zoom: 'path://',\n          back: 'path://',\n        },\n      },\n      saveAsImage: {},\n    }\n  },\n  xAxis: {\n    type: 'time',\n  },\n  yAxis: {\n    type: 'value',\n    min: 'dataMin',\n  },\n  grid: {\n    left: '2%',\n    right: '2%',\n    top: '2%',\n    bottom: 24,\n    containLabel: true,\n  },\n  series,\n};",
+          "google": {
+            "callback": "gmapReady",
+            "key": ""
+          },
+          "map": "none",
+          "renderer": "canvas",
+          "themeEditor": {
+            "config": "{\r\n  \"color\": [\r\n    \"#27727b\",\r\n    \"#fcce10\",\r\n    \"#c1232b\",\r\n    \"#e87c25\",\r\n    \"#b5c334\",\r\n    \"#fe8463\",\r\n    \"#9bca63\",\r\n    \"#fad860\",\r\n    \"#f3a43b\",\r\n    \"#60c0dd\",\r\n    \"#d7504b\",\r\n    \"#c6e579\",\r\n    \"#f4e001\",\r\n    \"#f0805a\",\r\n    \"#26c0c0\"\r\n  ],\r\n  \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n  \"textStyle\": {},\r\n  \"title\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#27727b\"\r\n    },\r\n    \"subtextStyle\": {\r\n      \"color\": \"#aaaaaa\"\r\n    }\r\n  },\r\n  \"line\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"radar\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"bar\": {\r\n    \"itemStyle\": {\r\n      \"barBorderWidth\": 0,\r\n      \"barBorderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"pie\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"scatter\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"boxplot\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"parallel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"sankey\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"funnel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"gauge\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"candlestick\": {\r\n    \"itemStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"color0\": \"#b5c334\",\r\n      \"borderColor\": \"#c1232b\",\r\n      \"borderColor0\": \"#b5c334\",\r\n      \"borderWidth\": 1\r\n    }\r\n  },\r\n  \"graph\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": 1,\r\n      \"color\": \"#aaa\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false,\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#27727b\",\r\n      \"#fcce10\",\r\n      \"#e87c25\",\r\n      \"#b5c334\",\r\n      \"#fe8463\",\r\n      \"#9bca63\",\r\n      \"#fad860\",\r\n      \"#f3a43b\",\r\n      \"#60c0dd\",\r\n      \"#d7504b\",\r\n      \"#c6e579\",\r\n      \"#f4e001\",\r\n      \"#f0805a\",\r\n      \"#26c0c0\"\r\n    ],\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    }\r\n  },\r\n  \"map\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"geo\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"categoryAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"valueAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ffffff\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"logAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"timeAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"toolbox\": {\r\n    \"iconStyle\": {\r\n      \"borderColor\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"iconStyle\": {\r\n        \"borderColor\": \"#e87c25\"\r\n      }\r\n    }\r\n  },\r\n  \"legend\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#333333\"\r\n    }\r\n  },\r\n  \"tooltip\": {\r\n    \"axisPointer\": {\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      },\r\n      \"crossStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      }\r\n    }\r\n  },\r\n  \"timeline\": {\r\n    \"lineStyle\": {\r\n      \"color\": \"#293c55\",\r\n      \"width\": 1\r\n    },\r\n    \"itemStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderWidth\": 1\r\n    },\r\n    \"controlStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderColor\": \"#27727b\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"checkpointStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"borderColor\": \"#c23531\"\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#293c55\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"color\": \"#72d4e0\"\r\n      },\r\n      \"controlStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"borderColor\": \"#27727b\",\r\n        \"borderWidth\": 0.5\r\n      },\r\n      \"label\": {\r\n        \"color\": \"#293c55\"\r\n      }\r\n    }\r\n  },\r\n  \"visualMap\": {\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#fcce10\"\r\n    ]\r\n  },\r\n  \"dataZoom\": {\r\n    \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n    \"dataBackgroundColor\": \"rgba(181,195,52,0.3)\",\r\n    \"fillerColor\": \"rgba(181,195,52,0.2)\",\r\n    \"handleColor\": \"#27727b\",\r\n    \"handleSize\": \"100%\",\r\n    \"textStyle\": {\r\n      \"color\": \"#999999\"\r\n    }\r\n  },\r\n  \"markPoint\": {\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    },\r\n    \"emphasis\": {\r\n      \"label\": {\r\n        \"color\": \"#eee\"\r\n      }\r\n    }\r\n  }\r\n}",
+            "height": 400,
+            "name": "custom"
+          },
+          "visualEditor": {
+            "code": "console.log(context);\n\n// Extracting data from the dataset\nvar categoryData = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[0];\n});\n\nvar metricsData1 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[1];\n});\n\nvar metricsData2 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[2];\n});\n\nvar metricsData3 = [];\nfor (var i = 0; i < metricsData1.length; i++) {\n  var diff = metricsData1[i] - metricsData2[i];\n  metricsData3.push(diff);\n}\n\noption = {\n  dataset: context.editor.dataset,\n  xAxis: {\n    type: 'category',\n    data: categoryData\n  },\n  yAxis: {\n    type: 'value'\n  },\n  series: [\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Volume Transaksi QRIS Inflow  (Rp Milyar)\",\n      data: metricsData1,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Volume Transaksi QRIS Outflow  (Rp Milyar)\",\n      data: metricsData2,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Selisih Transaksi QRIS (Rp Milyar)\",\n      data: metricsData3,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    }\n  ],\n  tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n      type: 'shadow'\n    }\n  },\n};\n\nreturn option;",
+            "codeHeight": 408,
+            "dataset": [
+              {
+                "name": "trx_date",
+                "source": "A"
+              },
+              {
+                "name": "metrics_value",
+                "source": "A"
+              },
+              {
+                "name": "metrics_value",
+                "source": "B"
+              }
+            ],
+            "series": []
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "with a as (\r\n  SELECT \r\n    --CONVERT(VARCHAR(10),TANGGAL_TRANSAKSI,120) trx_date\r\n    trx_date\r\n    ,convert(decimal(18,2),SUM(total_nominal)/1000000000) transaction_volume\r\n  FROM [QRIS].[dbo].[incoming_QRIS_EXT_BRI_DAILY]\r\n  WHERE \r\n    DATEDIFF(DAY,trx_date,GETDATE()) < 30 \r\n  GROUP BY \r\n    trx_date\r\n    --CONVERT(VARCHAR(10),trx_date,120)\r\n)\r\nselect \r\n  SUBSTRING(CONVERT(VARCHAR,trx_date,105),1,2) trx_date\r\n  ,transaction_volume metrics_value\r\nfrom a\r\norder by a.trx_date\r\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          },
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "with a as (\r\n  SELECT \r\n    --CONVERT(VARCHAR(10),TANGGAL_TRANSAKSI,120) trx_date\r\n    TANGGAL_TRANSAKSI\r\n    ,convert(decimal(18,2),SUM(TRANSACTION_AMOUNT)/1000000000) transaction_volume\r\n  FROM QRIS.dbo.TRANSAKSI_MPM_OFF_US_SUMMARY_DAILY_SUCCESS_ONLY\r\n  WHERE \r\n    DATEDIFF(DAY,TANGGAL_TRANSAKSI,GETDATE()) < 30 \r\n  GROUP BY \r\n    TANGGAL_TRANSAKSI\r\n    --CONVERT(VARCHAR(10),TANGGAL_TRANSAKSI,120)\r\n)\r\nselect \r\n  SUBSTRING(CONVERT(VARCHAR,TANGGAL_TRANSAKSI,105),1,2) trx_date\r\n  ,transaction_volume metrics_value\r\nfrom a\r\norder by a.TANGGAL_TRANSAKSI\r\n",
+            "refId": "B",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Volume Selisih Inflow Outflow Transaksi QRIS Daily (Rp Milyar) ",
+        "transparent": true,
+        "type": "volkovlabs-echarts-panel"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 23
+        },
+        "id": 7,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "<CENTER>\n<p style=\"background-color:#001852;\"><b><font size=\"5\" color=\"#fffff\">\nTransaction QRIS Monthly\n</font></b></p>\n</CENTER>",
+          "mode": "html"
+        },
+        "pluginVersion": "10.0.2",
+        "transparent": true,
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "mssql",
+          "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 12,
+          "w": 12,
+          "x": 0,
+          "y": 25
+        },
+        "id": 5,
+        "options": {
+          "baidu": {
+            "callback": "bmapReady",
+            "key": ""
+          },
+          "editor": {
+            "format": "auto",
+            "height": 600
+          },
+          "editorMode": "visual",
+          "gaode": {
+            "key": "",
+            "plugin": "AMap.Scale,AMap.ToolBar"
+          },
+          "getOption": "const series = data.series.map((s) => {\n  const sData = s.fields.find((f) => f.type === 'metrics_value').values.buffer || s.fields.find((f) => f.type === 'metrics_value').values;\n  const sTime = s.fields.find((f) => f.type === 'trx_date').values.buffer || s.fields.find((f) => f.type === 'trx_date').values;\n\n  return {\n    name: s.refId,\n    type: 'line',\n    showSymbol: false,\n    areaStyle: {\n      opacity: 0.1,\n    },\n    lineStyle: {\n      width: 1,\n    },\n    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),\n  };\n});\n\n/**\n * Enable Data Zoom by default\n */\nsetTimeout(() => echartsInstance.dispatchAction({\n  type: 'takeGlobalCursor',\n  key: 'dataZoomSelect',\n  dataZoomSelectActive: true,\n}), 500);\n\n/**\n * Update Time Range on Zoom\n */\nechartsInstance.on('datazoom', function (params) {\n  const startValue = params.batch[0]?.startValue;\n  const endValue = params.batch[0]?.endValue;\n  locationService.partial({ from: startValue, to: endValue });\n});\n\nreturn {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n  },\n  legend: {\n    left: '0',\n    bottom: '0',\n    data: data.series.map((s) => s.refId),\n    textStyle: {\n      color: 'rgba(128, 128, 128, .9)',\n    },\n  },\n  toolbox: {\n    feature: {\n      dataZoom: {\n        yAxisIndex: 'none',\n        icon: {\n          zoom: 'path://',\n          back: 'path://',\n        },\n      },\n      saveAsImage: {},\n    }\n  },\n  xAxis: {\n    type: 'time',\n  },\n  yAxis: {\n    type: 'value',\n    min: 'dataMin',\n  },\n  grid: {\n    left: '2%',\n    right: '2%',\n    top: '2%',\n    bottom: 24,\n    containLabel: true,\n  },\n  series,\n};",
+          "google": {
+            "callback": "gmapReady",
+            "key": ""
+          },
+          "map": "none",
+          "renderer": "canvas",
+          "themeEditor": {
+            "config": "{\r\n  \"color\": [\r\n    \"#27727b\",\r\n    \"#fcce10\",\r\n    \"#c1232b\",\r\n    \"#e87c25\",\r\n    \"#b5c334\",\r\n    \"#fe8463\",\r\n    \"#9bca63\",\r\n    \"#fad860\",\r\n    \"#f3a43b\",\r\n    \"#60c0dd\",\r\n    \"#d7504b\",\r\n    \"#c6e579\",\r\n    \"#f4e001\",\r\n    \"#f0805a\",\r\n    \"#26c0c0\"\r\n  ],\r\n  \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n  \"textStyle\": {},\r\n  \"title\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#27727b\"\r\n    },\r\n    \"subtextStyle\": {\r\n      \"color\": \"#aaaaaa\"\r\n    }\r\n  },\r\n  \"line\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"radar\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"bar\": {\r\n    \"itemStyle\": {\r\n      \"barBorderWidth\": 0,\r\n      \"barBorderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"pie\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"scatter\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"boxplot\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"parallel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"sankey\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"funnel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"gauge\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"candlestick\": {\r\n    \"itemStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"color0\": \"#b5c334\",\r\n      \"borderColor\": \"#c1232b\",\r\n      \"borderColor0\": \"#b5c334\",\r\n      \"borderWidth\": 1\r\n    }\r\n  },\r\n  \"graph\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": 1,\r\n      \"color\": \"#aaa\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false,\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#27727b\",\r\n      \"#fcce10\",\r\n      \"#e87c25\",\r\n      \"#b5c334\",\r\n      \"#fe8463\",\r\n      \"#9bca63\",\r\n      \"#fad860\",\r\n      \"#f3a43b\",\r\n      \"#60c0dd\",\r\n      \"#d7504b\",\r\n      \"#c6e579\",\r\n      \"#f4e001\",\r\n      \"#f0805a\",\r\n      \"#26c0c0\"\r\n    ],\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    }\r\n  },\r\n  \"map\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"geo\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"categoryAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"valueAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ffffff\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"logAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"timeAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"toolbox\": {\r\n    \"iconStyle\": {\r\n      \"borderColor\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"iconStyle\": {\r\n        \"borderColor\": \"#e87c25\"\r\n      }\r\n    }\r\n  },\r\n  \"legend\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#333333\"\r\n    }\r\n  },\r\n  \"tooltip\": {\r\n    \"axisPointer\": {\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      },\r\n      \"crossStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      }\r\n    }\r\n  },\r\n  \"timeline\": {\r\n    \"lineStyle\": {\r\n      \"color\": \"#293c55\",\r\n      \"width\": 1\r\n    },\r\n    \"itemStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderWidth\": 1\r\n    },\r\n    \"controlStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderColor\": \"#27727b\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"checkpointStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"borderColor\": \"#c23531\"\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#293c55\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"color\": \"#72d4e0\"\r\n      },\r\n      \"controlStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"borderColor\": \"#27727b\",\r\n        \"borderWidth\": 0.5\r\n      },\r\n      \"label\": {\r\n        \"color\": \"#293c55\"\r\n      }\r\n    }\r\n  },\r\n  \"visualMap\": {\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#fcce10\"\r\n    ]\r\n  },\r\n  \"dataZoom\": {\r\n    \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n    \"dataBackgroundColor\": \"rgba(181,195,52,0.3)\",\r\n    \"fillerColor\": \"rgba(181,195,52,0.2)\",\r\n    \"handleColor\": \"#27727b\",\r\n    \"handleSize\": \"100%\",\r\n    \"textStyle\": {\r\n      \"color\": \"#999999\"\r\n    }\r\n  },\r\n  \"markPoint\": {\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    },\r\n    \"emphasis\": {\r\n      \"label\": {\r\n        \"color\": \"#eee\"\r\n      }\r\n    }\r\n  }\r\n}",
+            "height": 229,
+            "name": "custom"
+          },
+          "visualEditor": {
+            "code": "console.log(context);\n\n// Extracting data from the dataset\nvar categoryData = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[0];\n});\n\nvar metricsData1 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[1];\n});\n\nvar metricsData2 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[2];\n});\n\nvar metricsData3 = [];\nfor (var i = 0; i < metricsData1.length; i++) {\n  var diff = metricsData1[i] - metricsData2[i];\n  metricsData3.push(diff);\n}\n\nreturn {\n  dataset: context.editor.dataset,\n  xAxis: {\n    type: 'category',\n    data: categoryData\n  },\n  yAxis: {\n    type: 'value'\n  },\n  series: [\n    {\n      type: 'bar',\n      name: \"Frekeunsi Transaksi QRIS Inflow  (Ribu Transaksi)\",\n      data: metricsData1,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      name: \"Frekeunsi Transaksi QRIS Outflow  (Ribu Transaksi)\",\n      data: metricsData2,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      name: \"Selisih Transaksi QRIS (Ribu Transaksi)\",\n      data: metricsData3,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    }\n  ],\n  tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n      type: 'shadow'\n    }\n  },\n};\n",
+            "codeHeight": 408,
+            "dataset": [
+              {
+                "name": "trx_date",
+                "source": "A"
+              },
+              {
+                "name": "metrics_value",
+                "source": "A"
+              },
+              {
+                "name": "metrics_value",
+                "source": "B"
+              }
+            ],
+            "series": []
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "with  a as (\r\n  select \r\n    trx_date\r\n    ,convert(decimal(18,2),sum(jumlah_transaksi)/1000) transaction_frequency    \r\n  from [QRIS].[dbo].[incoming_QRIS_EXT_BRI_DAILY]\r\n  where \r\n    datediff(MONTH, trx_date,getdate()) <= 3 --and rc ='00'\r\n    --and convert(varchar(7), [date],120) >= '2023-06'\r\n  group by \r\n    trx_date\r\n)\r\nselect\r\nyear([trx_date]) as y,\r\nmonth([trx_date]) as m\r\n, SUBSTRING(convert(varchar,[trx_date],7),1,3) as trx_date\r\n ,sum(transaction_frequency) metrics_value\r\nfrom a\r\ngroup by year([trx_date]), month([trx_date]), SUBSTRING(convert(varchar,[trx_date],7),1,3)\r\norder by year([trx_date]), month([trx_date]), SUBSTRING(convert(varchar,[trx_date],7),1,3)\r\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          },
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "with a as (\r\n  select \r\n    TANGGAL_TRANSAKSI,\r\n    convert(decimal(18,2), sum(TRANSACTION_TOTAL)/1000) as transaction_frequency    \r\n  from QRIS.dbo.TRANSAKSI_MPM_OFF_US_SUMMARY_DAILY_SUCCESS_ONLY\r\n  where \r\n    datediff(MONTH, TANGGAL_TRANSAKSI, getdate()) <= 3\r\n    --and rc ='00'\r\n    --and convert(varchar(7), [date],120) >= '2023-06'\r\n  group by \r\n    TANGGAL_TRANSAKSI\r\n),\r\nb as (\r\n  select\r\n    year(a.TANGGAL_TRANSAKSI) as y,\r\n    month(a.TANGGAL_TRANSAKSI) as m,\r\n    SUBSTRING(convert(varchar, a.TANGGAL_TRANSAKSI, 7), 1, 3) as trx_date,\r\n    sum(a.transaction_frequency) as metrics_value\r\n  from a\r\n  group by year(a.TANGGAL_TRANSAKSI), month(a.TANGGAL_TRANSAKSI), SUBSTRING(convert(varchar, a.TANGGAL_TRANSAKSI, 7), 1, 3)\r\n)\r\nselect y, m, trx_date, metrics_value \r\nfrom b\r\n",
+            "refId": "B",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Summary Frekuensi Transaksi Inflow Outflow QRIS Monthly (Ribu Transaksi) ",
+        "transparent": true,
+        "type": "volkovlabs-echarts-panel"
+      },
+      {
+        "datasource": {
+          "type": "mssql",
+          "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 12,
+          "w": 12,
+          "x": 12,
+          "y": 25
+        },
+        "id": 6,
+        "options": {
+          "baidu": {
+            "callback": "bmapReady",
+            "key": ""
+          },
+          "editor": {
+            "format": "auto",
+            "height": 600
+          },
+          "editorMode": "visual",
+          "gaode": {
+            "key": "",
+            "plugin": "AMap.Scale,AMap.ToolBar"
+          },
+          "getOption": "const series = data.series.map((s) => {\n  const sData = s.fields.find((f) => f.type === 'metrics_value').values.buffer || s.fields.find((f) => f.type === 'metrics_value').values;\n  const sTime = s.fields.find((f) => f.type === 'trx_date').values.buffer || s.fields.find((f) => f.type === 'trx_date').values;\n\n  return {\n    name: s.refId,\n    type: 'line',\n    showSymbol: false,\n    areaStyle: {\n      opacity: 0.1,\n    },\n    lineStyle: {\n      width: 1,\n    },\n    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),\n  };\n});\n\n/**\n * Enable Data Zoom by default\n */\nsetTimeout(() => echartsInstance.dispatchAction({\n  type: 'takeGlobalCursor',\n  key: 'dataZoomSelect',\n  dataZoomSelectActive: true,\n}), 500);\n\n/**\n * Update Time Range on Zoom\n */\nechartsInstance.on('datazoom', function (params) {\n  const startValue = params.batch[0]?.startValue;\n  const endValue = params.batch[0]?.endValue;\n  locationService.partial({ from: startValue, to: endValue });\n});\n\nreturn {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n  },\n  legend: {\n    left: '0',\n    bottom: '0',\n    data: data.series.map((s) => s.refId),\n    textStyle: {\n      color: 'rgba(128, 128, 128, .9)',\n    },\n  },\n  toolbox: {\n    feature: {\n      dataZoom: {\n        yAxisIndex: 'none',\n        icon: {\n          zoom: 'path://',\n          back: 'path://',\n        },\n      },\n      saveAsImage: {},\n    }\n  },\n  xAxis: {\n    type: 'time',\n  },\n  yAxis: {\n    type: 'value',\n    min: 'dataMin',\n  },\n  grid: {\n    left: '2%',\n    right: '2%',\n    top: '2%',\n    bottom: 24,\n    containLabel: true,\n  },\n  series,\n};",
+          "google": {
+            "callback": "gmapReady",
+            "key": ""
+          },
+          "map": "none",
+          "renderer": "canvas",
+          "themeEditor": {
+            "config": "{\r\n  \"color\": [\r\n    \"#27727b\",\r\n    \"#fcce10\",\r\n    \"#c1232b\",\r\n    \"#e87c25\",\r\n    \"#b5c334\",\r\n    \"#fe8463\",\r\n    \"#9bca63\",\r\n    \"#fad860\",\r\n    \"#f3a43b\",\r\n    \"#60c0dd\",\r\n    \"#d7504b\",\r\n    \"#c6e579\",\r\n    \"#f4e001\",\r\n    \"#f0805a\",\r\n    \"#26c0c0\"\r\n  ],\r\n  \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n  \"textStyle\": {},\r\n  \"title\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#27727b\"\r\n    },\r\n    \"subtextStyle\": {\r\n      \"color\": \"#aaaaaa\"\r\n    }\r\n  },\r\n  \"line\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"radar\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"bar\": {\r\n    \"itemStyle\": {\r\n      \"barBorderWidth\": 0,\r\n      \"barBorderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"pie\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"scatter\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"boxplot\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"parallel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"sankey\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"funnel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"gauge\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"candlestick\": {\r\n    \"itemStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"color0\": \"#b5c334\",\r\n      \"borderColor\": \"#c1232b\",\r\n      \"borderColor0\": \"#b5c334\",\r\n      \"borderWidth\": 1\r\n    }\r\n  },\r\n  \"graph\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": 1,\r\n      \"color\": \"#aaa\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false,\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#27727b\",\r\n      \"#fcce10\",\r\n      \"#e87c25\",\r\n      \"#b5c334\",\r\n      \"#fe8463\",\r\n      \"#9bca63\",\r\n      \"#fad860\",\r\n      \"#f3a43b\",\r\n      \"#60c0dd\",\r\n      \"#d7504b\",\r\n      \"#c6e579\",\r\n      \"#f4e001\",\r\n      \"#f0805a\",\r\n      \"#26c0c0\"\r\n    ],\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    }\r\n  },\r\n  \"map\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"geo\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"categoryAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"valueAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ffffff\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"logAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"timeAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"toolbox\": {\r\n    \"iconStyle\": {\r\n      \"borderColor\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"iconStyle\": {\r\n        \"borderColor\": \"#e87c25\"\r\n      }\r\n    }\r\n  },\r\n  \"legend\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#333333\"\r\n    }\r\n  },\r\n  \"tooltip\": {\r\n    \"axisPointer\": {\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      },\r\n      \"crossStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      }\r\n    }\r\n  },\r\n  \"timeline\": {\r\n    \"lineStyle\": {\r\n      \"color\": \"#293c55\",\r\n      \"width\": 1\r\n    },\r\n    \"itemStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderWidth\": 1\r\n    },\r\n    \"controlStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderColor\": \"#27727b\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"checkpointStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"borderColor\": \"#c23531\"\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#293c55\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"color\": \"#72d4e0\"\r\n      },\r\n      \"controlStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"borderColor\": \"#27727b\",\r\n        \"borderWidth\": 0.5\r\n      },\r\n      \"label\": {\r\n        \"color\": \"#293c55\"\r\n      }\r\n    }\r\n  },\r\n  \"visualMap\": {\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#fcce10\"\r\n    ]\r\n  },\r\n  \"dataZoom\": {\r\n    \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n    \"dataBackgroundColor\": \"rgba(181,195,52,0.3)\",\r\n    \"fillerColor\": \"rgba(181,195,52,0.2)\",\r\n    \"handleColor\": \"#27727b\",\r\n    \"handleSize\": \"100%\",\r\n    \"textStyle\": {\r\n      \"color\": \"#999999\"\r\n    }\r\n  },\r\n  \"markPoint\": {\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    },\r\n    \"emphasis\": {\r\n      \"label\": {\r\n        \"color\": \"#eee\"\r\n      }\r\n    }\r\n  }\r\n}",
+            "height": 400,
+            "name": "custom"
+          },
+          "visualEditor": {
+            "code": "console.log(context);\n\n// Extracting data from the dataset\nvar categoryData = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[0];\n});\n\nvar metricsData1 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[1];\n});\n\nvar metricsData2 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[2];\n});\n\nvar metricsData3 = [];\nfor (var i = 0; i < metricsData1.length; i++) {\n  var diff = metricsData1[i] - metricsData2[i];\n  metricsData3.push(diff);\n}\n\nreturn {\n  dataset: context.editor.dataset,\n  xAxis: {\n    type: 'category',\n    data: categoryData\n  },\n  yAxis: {\n    type: 'value'\n  },\n  series: [\n    {\n      type: 'bar',\n      name: \"Volume Transaksi QRIS Inflow  (Rp Milyar)\",\n      data: metricsData1,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      name: \"Volume Transaksi QRIS Outflow  (Rp Milyar)\",\n      data: metricsData2,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      name: \"Selisih Transaksi QRIS (Rp Milyar)\",\n      data: metricsData3,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    }\n  ],\n  tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n      type: 'shadow'\n    }\n  },\n};\n",
+            "codeHeight": 408,
+            "dataset": [
+              {
+                "name": "trx_date",
+                "source": "A"
+              },
+              {
+                "name": "metrics_value",
+                "source": "A"
+              },
+              {
+                "name": "metrics_value",
+                "source": "B"
+              }
+            ],
+            "series": []
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "with  a as (\r\n  select \r\n    trx_date\r\n    ,convert(decimal(18,2),sum(total_nominal)/1000) transaction_volume  \r\n  from [QRIS].[dbo].[incoming_QRIS_EXT_BRI_DAILY]\r\n  where \r\n    datediff(MONTH, trx_date,getdate()) <= 3 --and rc ='00'\r\n    --and convert(varchar(7), [date],120) >= '2023-06'\r\n  group by \r\n    trx_date\r\n)\r\nselect\r\nyear([trx_date]) as y,\r\nmonth([trx_date]) as m\r\n, SUBSTRING(convert(varchar,[trx_date],7),1,3) as trx_date\r\n ,sum(transaction_volume) metrics_value\r\nfrom a\r\ngroup by year([trx_date]), month([trx_date]), SUBSTRING(convert(varchar,[trx_date],7),1,3)\r\norder by year([trx_date]), month([trx_date]), SUBSTRING(convert(varchar,[trx_date],7),1,3)\r\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          },
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "with a as (\r\n  select \r\n    TANGGAL_TRANSAKSI,\r\n    convert(decimal(18,2), sum(TRANSACTION_AMOUNT)/1000) as transaction_volume  \r\n  from QRIS.dbo.TRANSAKSI_MPM_OFF_US_SUMMARY_DAILY_SUCCESS_ONLY\r\n  where \r\n    datediff(MONTH, TANGGAL_TRANSAKSI, getdate()) <= 3 --and rc ='00'\r\n    --and convert(varchar(7), [date],120) >= '2023-06'\r\n  group by \r\n    TANGGAL_TRANSAKSI\r\n),\r\nb as (\r\n  select\r\n    year(TANGGAL_TRANSAKSI) as y,\r\n    month(TANGGAL_TRANSAKSI) as m,\r\n    SUBSTRING(convert(varchar, TANGGAL_TRANSAKSI, 7), 1, 3) as trx_date,\r\n    sum(transaction_volume) as metrics_value\r\n  from a\r\n  group by year(TANGGAL_TRANSAKSI), month(TANGGAL_TRANSAKSI), SUBSTRING(convert(varchar, TANGGAL_TRANSAKSI, 7), 1, 3)\r\n  -- order by year(TANGGAL_TRANSAKSI), month(TANGGAL_TRANSAKSI), SUBSTRING(convert(varchar, TANGGAL_TRANSAKSI, 7), 1, 3)\r\n)\r\nselect y, m, trx_date, metrics_value \r\nfrom b \r\n",
+            "refId": "B",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Summary Volume Transaksi QRIS Inflow Outflow Monthly (Rp Milyar) ",
+        "transparent": true,
+        "type": "volkovlabs-echarts-panel"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 37
+        },
+        "id": 11,
+        "panels": [],
+        "title": "Transaction EDC",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 38
+        },
+        "id": 8,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "<CENTER>\n<p style=\"background-color:#1C82AD;\"><b><font size=\"5\" color=\"#fffff\">\nTransaction EDC Realtime\n</font></b></p>\n</CENTER>",
+          "mode": "html"
+        },
+        "pluginVersion": "10.0.2",
+        "transparent": true,
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "-- Mixed --"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisGridShow": true,
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 2,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Incoming"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#27727b",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Outgoing"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#fcce10",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Selisih"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "semi-dark-red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Selisih Frekuensi"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#c1232b",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Inflow"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#27727b",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Outflow"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#fcce10",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 40
+        },
+        "id": 17,
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "alias": "Inflow",
+            "bucketAggs": [
+              {
+                "field": "@timestamp",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "f666aebd-654c-4932-8d51-35bd1f608218"
+            },
+            "metrics": [
+              {
+                "id": "1",
+                "type": "count"
+              }
+            ],
+            "query": "switch :\"PSW X\" AND NOT jenisTrx :BRI AND rc: \"00\"",
+            "refId": "A",
+            "timeField": "@timestamp"
+          },
+          {
+            "alias": "Outflow-1",
+            "bucketAggs": [
+              {
+                "field": "@timestamp",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "f666aebd-654c-4932-8d51-35bd1f608218"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "id": "1",
+                "type": "count"
+              }
+            ],
+            "query": "switch :INCNPG* AND rc :\"00\" AND NOT mti:4*",
+            "refId": "B",
+            "timeField": "@timestamp"
+          },
+          {
+            "alias": "Outflow-2",
+            "bucketAggs": [
+              {
+                "field": "@timestamp",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b3f089ec-a24e-4c59-b6e3-ee6ea03012da"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "id": "1",
+                "type": "count"
+              }
+            ],
+            "query": "merch_org: \"000\" and trx_respcode :(00 85) AND trx_posmode : (5 OR 7 OR 97 OR 02 OR 91 OR 90 OR 95) AND trx_currency:360  ",
+            "refId": "C",
+            "timeField": "trx_datetime"
+          }
+        ],
+        "title": "Frekuensi Selisih Inflow Outflow Transaksi EDC Realtime (Ribu Transaksi) ",
+        "transformations": [
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "Outflow",
+              "binary": {
+                "left": "Outflow",
+                "reducer": "sum"
+              },
+              "mode": "reduceRow",
+              "reduce": {
+                "include": [
+                  "Outflow-1",
+                  "Outflow-2"
+                ],
+                "reducer": "sum"
+              }
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Outflow": false,
+                "Outflow-1": true,
+                "Outflow-2": true
+              },
+              "indexByName": {},
+              "renameByName": {}
+            }
+          },
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "Selisih Frekuensi",
+              "binary": {
+                "left": "Inflow",
+                "operator": "-",
+                "reducer": "sum",
+                "right": "Outflow"
+              },
+              "mode": "binary",
+              "reduce": {
+                "reducer": "sum"
+              }
+            }
+          }
+        ],
+        "transparent": true,
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "-- Mixed --"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisGridShow": true,
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 9,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Incoming"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#27727b",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Outgoing"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#fcce10",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Selisih Volume"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#c1232b",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Outflow"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#fcce10",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Inflow "
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "#27727b",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 40
+        },
+        "id": 18,
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "alias": "Inflow ",
+            "bucketAggs": [
+              {
+                "field": "@timestamp",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "f666aebd-654c-4932-8d51-35bd1f608218"
+            },
+            "metrics": [
+              {
+                "field": "trxAmount",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "switch :\"PSW X\" AND NOT jenisTrx :BRI AND rc: \"00\"",
+            "refId": "A",
+            "timeField": "@timestamp"
+          },
+          {
+            "alias": "Outflow Debit",
+            "bucketAggs": [
+              {
+                "field": "@timestamp",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "f666aebd-654c-4932-8d51-35bd1f608218"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "trxAmount",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "switch :INCNPG* AND rc :\"00\" AND NOT mti:4*  ",
+            "refId": "B",
+            "timeField": "@timestamp"
+          },
+          {
+            "alias": "Outflow Kredit",
+            "bucketAggs": [
+              {
+                "field": "@timestamp",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b3f089ec-a24e-4c59-b6e3-ee6ea03012da"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "trx_billamt",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "merch_org: \"000\" and trx_respcode :(00 85) AND trx_posmode : (5 OR 7 OR 97 OR 02 OR 91 OR 90 OR 95) AND trx_currency:360  ",
+            "refId": "C",
+            "timeField": "trx_datetime"
+          }
+        ],
+        "title": "Volume Selisih Inflow Outflow Transaksi EDC Realtime (Rp Milyar) ",
+        "transformations": [
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "Outflow",
+              "mode": "reduceRow",
+              "reduce": {
+                "reducer": "sum"
+              }
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Outflow Debit": true,
+                "Outflow Kredit": true
+              },
+              "indexByName": {},
+              "renameByName": {}
+            }
+          },
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "Selisih Volume",
+              "binary": {
+                "left": "Inflow ",
+                "operator": "-",
+                "reducer": "sum",
+                "right": "Outflow"
+              },
+              "mode": "binary",
+              "reduce": {
+                "reducer": "sum"
+              }
+            }
+          }
+        ],
+        "transparent": true,
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 48
+        },
+        "id": 20,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "<CENTER>\n<p style=\"background-color:#1C82AD;\"><b><font size=\"5\" color=\"#fffff\">\nTransaction EDC Daily\n</font></b></p>\n</CENTER>",
+          "mode": "html"
+        },
+        "pluginVersion": "10.0.2",
+        "transparent": true,
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "-- Mixed --"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 0,
+          "y": 50
+        },
+        "id": 21,
+        "options": {
+          "baidu": {
+            "callback": "bmapReady",
+            "key": ""
+          },
+          "editor": {
+            "format": "auto",
+            "height": 600
+          },
+          "editorMode": "visual",
+          "gaode": {
+            "key": "",
+            "plugin": "AMap.Scale,AMap.ToolBar"
+          },
+          "getOption": "const series = data.series.map((s) => {\n  const sData = s.fields.find((f) => f.type === 'number').values.buffer || s.fields.find((f) => f.type === 'number').values;\n  const sTime = s.fields.find((f) => f.type === 'time').values.buffer || s.fields.find((f) => f.type === 'time').values;\n  \n  return {\n    name: s.refId,\n    type: 'line',\n    showSymbol: false,\n    areaStyle: {\n      opacity: 0.1,\n    },\n    lineStyle: {\n      width: 1,\n    },\n    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),\n  };\n});\n\n/**\n * Enable Data Zoom by default\n */\nsetTimeout(() => echartsInstance.dispatchAction({\n  type: 'takeGlobalCursor',\n  key: 'dataZoomSelect',\n  dataZoomSelectActive: true,\n}), 500);\n\n/**\n * Update Time Range on Zoom\n */\nechartsInstance.on('datazoom', function (params) {\n  const startValue = params.batch[0]?.startValue;\n  const endValue = params.batch[0]?.endValue;\n  locationService.partial({ from: startValue, to: endValue });\n});\n\nreturn {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n  },\n  legend: {\n    left: '0',\n    bottom: '0',\n    data: data.series.map((s) => s.refId),\n    textStyle: {\n      color: 'rgba(128, 128, 128, .9)',\n    },\n  },\n  toolbox: {\n    feature: {\n      dataZoom: {\n        yAxisIndex: 'none',\n        icon: {\n          zoom: 'path://',\n          back: 'path://',\n        },\n      },\n      saveAsImage: {},\n    }\n  },\n  xAxis: {\n    type: 'time',\n  },\n  yAxis: {\n    type: 'value',\n    min: 'dataMin',\n  },\n  grid: {\n    left: '2%',\n    right: '2%',\n    top: '2%',\n    bottom: 24,\n    containLabel: true,\n  },\n  series,\n};",
+          "google": {
+            "callback": "gmapReady",
+            "key": ""
+          },
+          "map": "none",
+          "renderer": "canvas",
+          "themeEditor": {
+            "config": "{\r\n  \"color\": [\r\n    \"#27727b\",\r\n    \"#fcce10\",\r\n    \"#c1232b\",\r\n    \"#e87c25\",\r\n    \"#b5c334\",\r\n    \"#fe8463\",\r\n    \"#9bca63\",\r\n    \"#fad860\",\r\n    \"#f3a43b\",\r\n    \"#60c0dd\",\r\n    \"#d7504b\",\r\n    \"#c6e579\",\r\n    \"#f4e001\",\r\n    \"#f0805a\",\r\n    \"#26c0c0\"\r\n  ],\r\n  \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n  \"textStyle\": {},\r\n  \"title\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#27727b\"\r\n    },\r\n    \"subtextStyle\": {\r\n      \"color\": \"#aaaaaa\"\r\n    }\r\n  },\r\n  \"line\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"radar\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"bar\": {\r\n    \"itemStyle\": {\r\n      \"barBorderWidth\": 0,\r\n      \"barBorderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"pie\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"scatter\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"boxplot\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"parallel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"sankey\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"funnel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"gauge\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"candlestick\": {\r\n    \"itemStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"color0\": \"#b5c334\",\r\n      \"borderColor\": \"#c1232b\",\r\n      \"borderColor0\": \"#b5c334\",\r\n      \"borderWidth\": 1\r\n    }\r\n  },\r\n  \"graph\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": 1,\r\n      \"color\": \"#aaa\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false,\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#27727b\",\r\n      \"#fcce10\",\r\n      \"#e87c25\",\r\n      \"#b5c334\",\r\n      \"#fe8463\",\r\n      \"#9bca63\",\r\n      \"#fad860\",\r\n      \"#f3a43b\",\r\n      \"#60c0dd\",\r\n      \"#d7504b\",\r\n      \"#c6e579\",\r\n      \"#f4e001\",\r\n      \"#f0805a\",\r\n      \"#26c0c0\"\r\n    ],\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    }\r\n  },\r\n  \"map\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"geo\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"categoryAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"valueAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ffffff\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"logAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"timeAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"toolbox\": {\r\n    \"iconStyle\": {\r\n      \"borderColor\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"iconStyle\": {\r\n        \"borderColor\": \"#e87c25\"\r\n      }\r\n    }\r\n  },\r\n  \"legend\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#333333\"\r\n    }\r\n  },\r\n  \"tooltip\": {\r\n    \"axisPointer\": {\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      },\r\n      \"crossStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      }\r\n    }\r\n  },\r\n  \"timeline\": {\r\n    \"lineStyle\": {\r\n      \"color\": \"#293c55\",\r\n      \"width\": 1\r\n    },\r\n    \"itemStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderWidth\": 1\r\n    },\r\n    \"controlStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderColor\": \"#27727b\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"checkpointStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"borderColor\": \"#c23531\"\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#293c55\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"color\": \"#72d4e0\"\r\n      },\r\n      \"controlStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"borderColor\": \"#27727b\",\r\n        \"borderWidth\": 0.5\r\n      },\r\n      \"label\": {\r\n        \"color\": \"#293c55\"\r\n      }\r\n    }\r\n  },\r\n  \"visualMap\": {\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#fcce10\"\r\n    ]\r\n  },\r\n  \"dataZoom\": {\r\n    \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n    \"dataBackgroundColor\": \"rgba(181,195,52,0.3)\",\r\n    \"fillerColor\": \"rgba(181,195,52,0.2)\",\r\n    \"handleColor\": \"#27727b\",\r\n    \"handleSize\": \"100%\",\r\n    \"textStyle\": {\r\n      \"color\": \"#999999\"\r\n    }\r\n  },\r\n  \"markPoint\": {\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    },\r\n    \"emphasis\": {\r\n      \"label\": {\r\n        \"color\": \"#eee\"\r\n      }\r\n    }\r\n  }\r\n}",
+            "height": 400,
+            "name": "custom"
+          },
+          "visualEditor": {
+            "code": "console.log(context);\n\n// Extracting data from the dataset\nvar categoryData = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[0];\n});\n\nvar metricsData1 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[1];\n});\n\nvar metricsData2 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[2];\n});\n\nvar metricsData3 = [];\nfor (var i = 0; i < metricsData1.length; i++) {\n  var diff = metricsData1[i] - metricsData2[i];\n  metricsData3.push(diff);\n}\n\nreturn {\n  dataset: context.editor.dataset,\n  xAxis: {\n    type: 'category',\n    data: categoryData\n  },\n  yAxis: {\n    type: 'value'\n  },\n  series: [\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Frekeunsi Transaksi QRIS Inflow  (Ribu Transaksi)\",\n      data: metricsData1,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Frekeunsi Transaksi QRIS Outflow  (Ribu Transaksi)\",\n      data: metricsData2,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Selisih Transaksi QRIS (Ribu Transaksi)\",\n      data: metricsData3,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    }\n  ],\n  tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n      type: 'shadow'\n    }\n  },\n};\n",
+            "codeHeight": 408,
+            "dataset": [
+              {
+                "name": "trx_date",
+                "source": "inflow_fix"
+              },
+              {
+                "name": "total_transaction_frequency",
+                "source": "inflow_fix"
+              },
+              {
+                "name": "total_transaction_frequency",
+                "source": "outflow_fix"
+              }
+            ],
+            "series": [
+              {
+                "id": "Data",
+                "name": "Data",
+                "type": "bar",
+                "uid": "0c4eabb4-6d9c-4a39-96ae-1fc5f23eed6f"
+              },
+              {
+                "encode": {
+                  "x": [],
+                  "y": []
+                },
+                "id": "Data2",
+                "name": "",
+                "type": "line",
+                "uid": "e70da15c-57b9-490d-90da-d8df27ca3c35"
+              }
+            ]
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "WITH a1 AS (\r\n  SELECT\r\n    Tanggal,\r\n    CONVERT(decimal(18, 2), SUM(TRANSACTION_TOTAL) / 1000) AS transaction_frequency\r\n  FROM\r\n    [DataAnalytics].dbo.[incoming_NPG_EXT_BRI_DAILY]\r\n  WHERE\r\n    DATEDIFF(DAY, Tanggal, GETDATE()) < 30 AND RC = '00'\r\n  GROUP BY\r\n    Tanggal\r\n),\r\na2 AS (\r\n  SELECT\r\n    Tanggal,\r\n    CONVERT(decimal(18, 2), SUM(TRANSACTION_TOTAL) / 1000) AS transaction_frequency\r\n  FROM\r\n    KartuKredit.dbo.[incoming_CC_EXT_BRI_DAILY]\r\n  WHERE\r\n    DATEDIFF(DAY, Tanggal, GETDATE()) < 30\r\n  GROUP BY\r\n    Tanggal\r\n)\r\nSELECT\r\n  SUBSTRING(CONVERT(VARCHAR, a1.Tanggal, 105), 1, 2) AS trx_date,\r\n  a1.transaction_frequency + a2.transaction_frequency AS total_transaction_frequency\r\nFROM\r\n  a1\r\nJOIN a2 ON a1.Tanggal = a2.Tanggal\r\nORDER BY\r\n  a1.Tanggal;\r\n",
+            "refId": "inflow_fix",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          },
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "WITH \r\na AS (\r\n  select \r\n    convert(DATE,[date]) as trx_date\r\n    ,convert(decimal(18,2),sum(jumlah_transaksi)/1000) transaction_frequency\r\n  from [DataAnalytics].dbo.[incoming_NPG_SummaryDaily]\r\n  where \r\n    datediff(day, [date],getdate()) < 30   \r\n    and rc ='00'\r\n  group by [date]\r\n),\r\nb AS (\r\n  SELECT \r\n    trx_date\r\n    ,convert(decimal(18,2),SUM(TRANSACTION_TOTAL)/1000) transaction_frequency\r\n  FROM KartuKredit.dbo.CC_OFF_US_SUMMARY_DAILY_SUCCESS_ONLY\r\n  WHERE \r\n    DATEDIFF(DAY,trx_date,GETDATE()) < 30 \r\n  GROUP BY trx_date\r\n)\r\nSELECT\r\n  SUBSTRING(CONVERT(VARCHAR,b.trx_date,105),1,2) as trx_date,\r\n  a.transaction_frequency + b.transaction_frequency AS total_transaction_frequency\r\nFROM\r\n  b\r\nJOIN a ON b.trx_date = a.trx_date\t\r\norder by b.trx_date",
+            "refId": "outflow_fix",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Frekuensi Selisih Inflow Outflow Transaksi EDC Daily (Ribu Transaksi) ",
+        "transparent": true,
+        "type": "volkovlabs-echarts-panel"
+      },
+      {
+        "datasource": {
+          "type": "mssql",
+          "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 12,
+          "y": 50
+        },
+        "id": 22,
+        "options": {
+          "baidu": {
+            "callback": "bmapReady",
+            "key": ""
+          },
+          "editor": {
+            "format": "auto",
+            "height": 600
+          },
+          "editorMode": "visual",
+          "gaode": {
+            "key": "",
+            "plugin": "AMap.Scale,AMap.ToolBar"
+          },
+          "getOption": "const series = data.series.map((s) => {\n  const sData = s.fields.find((f) => f.type === 'metrics_value').values.buffer || s.fields.find((f) => f.type === 'metrics_value').values;\n  const sTime = s.fields.find((f) => f.type === 'trx_date').values.buffer || s.fields.find((f) => f.type === 'trx_date').values;\n\n  return {\n    name: s.refId,\n    type: 'line',\n    showSymbol: false,\n    areaStyle: {\n      opacity: 0.1,\n    },\n    lineStyle: {\n      width: 1,\n    },\n    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),\n  };\n});\n\n/**\n * Enable Data Zoom by default\n */\nsetTimeout(() => echartsInstance.dispatchAction({\n  type: 'takeGlobalCursor',\n  key: 'dataZoomSelect',\n  dataZoomSelectActive: true,\n}), 500);\n\n/**\n * Update Time Range on Zoom\n */\nechartsInstance.on('datazoom', function (params) {\n  const startValue = params.batch[0]?.startValue;\n  const endValue = params.batch[0]?.endValue;\n  locationService.partial({ from: startValue, to: endValue });\n});\n\nreturn {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n  },\n  legend: {\n    left: '0',\n    bottom: '0',\n    data: data.series.map((s) => s.refId),\n    textStyle: {\n      color: 'rgba(128, 128, 128, .9)',\n    },\n  },\n  toolbox: {\n    feature: {\n      dataZoom: {\n        yAxisIndex: 'none',\n        icon: {\n          zoom: 'path://',\n          back: 'path://',\n        },\n      },\n      saveAsImage: {},\n    }\n  },\n  xAxis: {\n    type: 'time',\n  },\n  yAxis: {\n    type: 'value',\n    min: 'dataMin',\n  },\n  grid: {\n    left: '2%',\n    right: '2%',\n    top: '2%',\n    bottom: 24,\n    containLabel: true,\n  },\n  series,\n};",
+          "google": {
+            "callback": "gmapReady",
+            "key": ""
+          },
+          "map": "none",
+          "renderer": "canvas",
+          "themeEditor": {
+            "config": "{\r\n  \"color\": [\r\n    \"#27727b\",\r\n    \"#fcce10\",\r\n    \"#c1232b\",\r\n    \"#e87c25\",\r\n    \"#b5c334\",\r\n    \"#fe8463\",\r\n    \"#9bca63\",\r\n    \"#fad860\",\r\n    \"#f3a43b\",\r\n    \"#60c0dd\",\r\n    \"#d7504b\",\r\n    \"#c6e579\",\r\n    \"#f4e001\",\r\n    \"#f0805a\",\r\n    \"#26c0c0\"\r\n  ],\r\n  \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n  \"textStyle\": {},\r\n  \"title\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#27727b\"\r\n    },\r\n    \"subtextStyle\": {\r\n      \"color\": \"#aaaaaa\"\r\n    }\r\n  },\r\n  \"line\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"radar\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"bar\": {\r\n    \"itemStyle\": {\r\n      \"barBorderWidth\": 0,\r\n      \"barBorderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"pie\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"scatter\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"boxplot\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"parallel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"sankey\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"funnel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"gauge\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"candlestick\": {\r\n    \"itemStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"color0\": \"#b5c334\",\r\n      \"borderColor\": \"#c1232b\",\r\n      \"borderColor0\": \"#b5c334\",\r\n      \"borderWidth\": 1\r\n    }\r\n  },\r\n  \"graph\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": 1,\r\n      \"color\": \"#aaa\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false,\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#27727b\",\r\n      \"#fcce10\",\r\n      \"#e87c25\",\r\n      \"#b5c334\",\r\n      \"#fe8463\",\r\n      \"#9bca63\",\r\n      \"#fad860\",\r\n      \"#f3a43b\",\r\n      \"#60c0dd\",\r\n      \"#d7504b\",\r\n      \"#c6e579\",\r\n      \"#f4e001\",\r\n      \"#f0805a\",\r\n      \"#26c0c0\"\r\n    ],\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    }\r\n  },\r\n  \"map\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"geo\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"categoryAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"valueAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ffffff\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"logAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"timeAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"toolbox\": {\r\n    \"iconStyle\": {\r\n      \"borderColor\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"iconStyle\": {\r\n        \"borderColor\": \"#e87c25\"\r\n      }\r\n    }\r\n  },\r\n  \"legend\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#333333\"\r\n    }\r\n  },\r\n  \"tooltip\": {\r\n    \"axisPointer\": {\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      },\r\n      \"crossStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      }\r\n    }\r\n  },\r\n  \"timeline\": {\r\n    \"lineStyle\": {\r\n      \"color\": \"#293c55\",\r\n      \"width\": 1\r\n    },\r\n    \"itemStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderWidth\": 1\r\n    },\r\n    \"controlStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderColor\": \"#27727b\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"checkpointStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"borderColor\": \"#c23531\"\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#293c55\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"color\": \"#72d4e0\"\r\n      },\r\n      \"controlStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"borderColor\": \"#27727b\",\r\n        \"borderWidth\": 0.5\r\n      },\r\n      \"label\": {\r\n        \"color\": \"#293c55\"\r\n      }\r\n    }\r\n  },\r\n  \"visualMap\": {\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#fcce10\"\r\n    ]\r\n  },\r\n  \"dataZoom\": {\r\n    \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n    \"dataBackgroundColor\": \"rgba(181,195,52,0.3)\",\r\n    \"fillerColor\": \"rgba(181,195,52,0.2)\",\r\n    \"handleColor\": \"#27727b\",\r\n    \"handleSize\": \"100%\",\r\n    \"textStyle\": {\r\n      \"color\": \"#999999\"\r\n    }\r\n  },\r\n  \"markPoint\": {\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    },\r\n    \"emphasis\": {\r\n      \"label\": {\r\n        \"color\": \"#eee\"\r\n      }\r\n    }\r\n  }\r\n}",
+            "height": 400,
+            "name": "custom"
+          },
+          "visualEditor": {
+            "code": "console.log(context);\n\n// Extracting data from the dataset\nvar categoryData = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[0];\n});\n\nvar metricsData1 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[1];\n});\n\nvar metricsData2 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[2];\n});\n\nvar metricsData3 = [];\nfor (var i = 0; i < metricsData1.length; i++) {\n  var diff = metricsData1[i] - metricsData2[i];\n  metricsData3.push(diff);\n}\n\noption = {\n  dataset: context.editor.dataset,\n  xAxis: {\n    type: 'category',\n    data: categoryData\n  },\n  yAxis: {\n    type: 'value'\n  },\n  series: [\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Volume Transaksi EDC Inflow  (Rp Milyar)\",\n      data: metricsData1,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Volume Transaksi EDC Outflow  (Rp Milyar)\",\n      data: metricsData2,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      stack: 'total',\n      name: \"Selisih Transaksi EDC (Rp Milyar)\",\n      data: metricsData3,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    }\n  ],\n  tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n      type: 'shadow'\n    }\n  },\n};\n\nreturn option;",
+            "codeHeight": 408,
+            "dataset": [
+              {
+                "name": "trx_date",
+                "source": "inflow"
+              },
+              {
+                "name": "total_transaction_volume",
+                "source": "inflow"
+              },
+              {
+                "name": "total_transaction_volume",
+                "source": "outflow"
+              }
+            ],
+            "series": []
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "with  a as (\r\n  SELECT \r\n    Tanggal\r\n    ,convert(decimal(18,2),SUM(TRANSACTION_AMOUNT)/1000000000) transaction_volume     \r\n  FROM [DataAnalytics].dbo.[incoming_NPG_EXT_BRI_DAILY]\r\n  WHERE \r\n    DATEDIFF(DAY,Tanggal,GETDATE()) < 30 AND RC = '00'\r\n  GROUP BY \r\n    Tanggal\r\n),\r\nb as (\r\n\tSELECT \r\n    Tanggal\r\n    ,convert(decimal(18,2),SUM(TRANSACTION_AMOUNT)/1000000000) transaction_volume     \r\n  FROM KartuKredit.dbo.[incoming_CC_EXT_BRI_DAILY]\r\n  WHERE \r\n    DATEDIFF(DAY,Tanggal,GETDATE()) < 30 \r\n  GROUP BY \r\n    Tanggal\r\n)\r\nselect \r\n  SUBSTRING(CONVERT(VARCHAR,a.Tanggal,105),1,2) trx_date\r\n  ,a.transaction_volume + b.transaction_volume as total_transaction_volume\r\nFROM\r\n  a\r\nJOIN b ON a.Tanggal = b.Tanggal\r\nORDER BY\r\n  a.Tanggal;",
+            "refId": "inflow",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          },
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "with  a as (\r\n  select \r\n    [date] as trx_date\r\n    ,convert(decimal(18,2),sum(sales_volume)/1000000000) transaction_volume     \r\n  from [DataAnalytics].dbo.[incoming_NPG_SummaryDaily]\r\n  where \r\n    datediff(day, [date],getdate()) < 30   \r\n    and rc ='00'\r\n  group by \r\n    [date]\r\n), \r\nb as(\r\n\tselect\r\n\ttrx_date\r\n    ,convert(decimal(18,2),SUM(TRANSACTION_AMOUNT)/1000000000) transaction_volume\r\n  FROM KartuKredit.dbo.CC_OFF_US_SUMMARY_DAILY_SUCCESS_ONLY\r\n  WHERE \r\n    DATEDIFF(DAY,trx_date,GETDATE()) < 30 \r\n  GROUP BY \r\n    trx_date\r\n)\r\nselect \r\n   SUBSTRING(CONVERT(VARCHAR,a.trx_date,105),1,2) trx_date\r\n  , a.transaction_volume + b.transaction_volume as total_transaction_volume \r\nFROM\r\n  a\r\nJOIN b ON a.trx_date = b.trx_date\r\nORDER BY\r\n  a.trx_date;",
+            "refId": "outflow",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Volume Selisih Inflow Outflow Transaksi EDC Daily (Rp Milyar) ",
+        "transparent": true,
+        "type": "volkovlabs-echarts-panel"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 60
+        },
+        "id": 19,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "<CENTER>\n<p style=\"background-color:#1C82AD;\"><b><font size=\"5\" color=\"#fffff\">\nTransaction EDC Monthly\n</font></b></p>\n</CENTER>",
+          "mode": "html"
+        },
+        "pluginVersion": "10.0.2",
+        "transparent": true,
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "mssql",
+          "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 12,
+          "w": 12,
+          "x": 0,
+          "y": 62
+        },
+        "id": 9,
+        "options": {
+          "baidu": {
+            "callback": "bmapReady",
+            "key": ""
+          },
+          "editor": {
+            "format": "auto",
+            "height": 600
+          },
+          "editorMode": "visual",
+          "gaode": {
+            "key": "",
+            "plugin": "AMap.Scale,AMap.ToolBar"
+          },
+          "getOption": "const series = data.series.map((s) => {\n  const sData = s.fields.find((f) => f.type === 'metrics_value').values.buffer || s.fields.find((f) => f.type === 'metrics_value').values;\n  const sTime = s.fields.find((f) => f.type === 'trx_date').values.buffer || s.fields.find((f) => f.type === 'trx_date').values;\n\n  return {\n    name: s.refId,\n    type: 'line',\n    showSymbol: false,\n    areaStyle: {\n      opacity: 0.1,\n    },\n    lineStyle: {\n      width: 1,\n    },\n    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),\n  };\n});\n\n/**\n * Enable Data Zoom by default\n */\nsetTimeout(() => echartsInstance.dispatchAction({\n  type: 'takeGlobalCursor',\n  key: 'dataZoomSelect',\n  dataZoomSelectActive: true,\n}), 500);\n\n/**\n * Update Time Range on Zoom\n */\nechartsInstance.on('datazoom', function (params) {\n  const startValue = params.batch[0]?.startValue;\n  const endValue = params.batch[0]?.endValue;\n  locationService.partial({ from: startValue, to: endValue });\n});\n\nreturn {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n  },\n  legend: {\n    left: '0',\n    bottom: '0',\n    data: data.series.map((s) => s.refId),\n    textStyle: {\n      color: 'rgba(128, 128, 128, .9)',\n    },\n  },\n  toolbox: {\n    feature: {\n      dataZoom: {\n        yAxisIndex: 'none',\n        icon: {\n          zoom: 'path://',\n          back: 'path://',\n        },\n      },\n      saveAsImage: {},\n    }\n  },\n  xAxis: {\n    type: 'time',\n  },\n  yAxis: {\n    type: 'value',\n    min: 'dataMin',\n  },\n  grid: {\n    left: '2%',\n    right: '2%',\n    top: '2%',\n    bottom: 24,\n    containLabel: true,\n  },\n  series,\n};",
+          "google": {
+            "callback": "gmapReady",
+            "key": ""
+          },
+          "map": "none",
+          "renderer": "canvas",
+          "themeEditor": {
+            "config": "{\r\n  \"color\": [\r\n    \"#27727b\",\r\n    \"#fcce10\",\r\n    \"#c1232b\",\r\n    \"#e87c25\",\r\n    \"#b5c334\",\r\n    \"#fe8463\",\r\n    \"#9bca63\",\r\n    \"#fad860\",\r\n    \"#f3a43b\",\r\n    \"#60c0dd\",\r\n    \"#d7504b\",\r\n    \"#c6e579\",\r\n    \"#f4e001\",\r\n    \"#f0805a\",\r\n    \"#26c0c0\"\r\n  ],\r\n  \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n  \"textStyle\": {},\r\n  \"title\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#27727b\"\r\n    },\r\n    \"subtextStyle\": {\r\n      \"color\": \"#aaaaaa\"\r\n    }\r\n  },\r\n  \"line\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"radar\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"bar\": {\r\n    \"itemStyle\": {\r\n      \"barBorderWidth\": 0,\r\n      \"barBorderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"pie\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"scatter\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"boxplot\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"parallel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"sankey\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"funnel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"gauge\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"candlestick\": {\r\n    \"itemStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"color0\": \"#b5c334\",\r\n      \"borderColor\": \"#c1232b\",\r\n      \"borderColor0\": \"#b5c334\",\r\n      \"borderWidth\": 1\r\n    }\r\n  },\r\n  \"graph\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": 1,\r\n      \"color\": \"#aaa\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false,\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#27727b\",\r\n      \"#fcce10\",\r\n      \"#e87c25\",\r\n      \"#b5c334\",\r\n      \"#fe8463\",\r\n      \"#9bca63\",\r\n      \"#fad860\",\r\n      \"#f3a43b\",\r\n      \"#60c0dd\",\r\n      \"#d7504b\",\r\n      \"#c6e579\",\r\n      \"#f4e001\",\r\n      \"#f0805a\",\r\n      \"#26c0c0\"\r\n    ],\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    }\r\n  },\r\n  \"map\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"geo\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"categoryAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"valueAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ffffff\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"logAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"timeAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"toolbox\": {\r\n    \"iconStyle\": {\r\n      \"borderColor\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"iconStyle\": {\r\n        \"borderColor\": \"#e87c25\"\r\n      }\r\n    }\r\n  },\r\n  \"legend\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#333333\"\r\n    }\r\n  },\r\n  \"tooltip\": {\r\n    \"axisPointer\": {\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      },\r\n      \"crossStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      }\r\n    }\r\n  },\r\n  \"timeline\": {\r\n    \"lineStyle\": {\r\n      \"color\": \"#293c55\",\r\n      \"width\": 1\r\n    },\r\n    \"itemStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderWidth\": 1\r\n    },\r\n    \"controlStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderColor\": \"#27727b\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"checkpointStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"borderColor\": \"#c23531\"\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#293c55\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"color\": \"#72d4e0\"\r\n      },\r\n      \"controlStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"borderColor\": \"#27727b\",\r\n        \"borderWidth\": 0.5\r\n      },\r\n      \"label\": {\r\n        \"color\": \"#293c55\"\r\n      }\r\n    }\r\n  },\r\n  \"visualMap\": {\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#fcce10\"\r\n    ]\r\n  },\r\n  \"dataZoom\": {\r\n    \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n    \"dataBackgroundColor\": \"rgba(181,195,52,0.3)\",\r\n    \"fillerColor\": \"rgba(181,195,52,0.2)\",\r\n    \"handleColor\": \"#27727b\",\r\n    \"handleSize\": \"100%\",\r\n    \"textStyle\": {\r\n      \"color\": \"#999999\"\r\n    }\r\n  },\r\n  \"markPoint\": {\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    },\r\n    \"emphasis\": {\r\n      \"label\": {\r\n        \"color\": \"#eee\"\r\n      }\r\n    }\r\n  }\r\n}",
+            "height": 400,
+            "name": "custom"
+          },
+          "visualEditor": {
+            "code": "console.log(context);\n\n// Extracting data from the dataset\nvar categoryData = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[0];\n});\n\nvar metricsData1 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[1];\n});\n\nvar metricsData2 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[2];\n});\n\nvar metricsData3 = [];\nfor (var i = 0; i < metricsData1.length; i++) {\n  var diff = metricsData1[i] - metricsData2[i];\n  metricsData3.push(diff);\n}\n\nreturn {\n  dataset: context.editor.dataset,\n  xAxis: {\n    type: 'category',\n    data: categoryData\n  },\n  yAxis: {\n    type: 'value',\n    min: 0,\n  },\n  series: [\n    {\n      type: 'bar',\n      name: \"Frekeunsi Transaksi EDC Inflow  (Ribu Transaksi)\",\n      data: metricsData1,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      name: \"Frekeunsi Transaksi EDC Outflow  (Ribu Transaksi)\",\n      data: metricsData2,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      name: \"Selisih Transaksi EDC (Ribu Transaksi)\",\n      data: metricsData3,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    }\n  ],\n  tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n      type: 'shadow'\n    }\n  },\n};\n",
+            "codeHeight": 408,
+            "dataset": [
+              {
+                "name": "trx_date",
+                "source": "B"
+              },
+              {
+                "name": "metrics_value",
+                "source": "B"
+              },
+              {
+                "name": "metrics_value",
+                "source": "A"
+              }
+            ],
+            "series": []
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "with  a as (\r\n  select \r\n    trx_date\r\n    ,convert(decimal(18,2),sum(jumlah_transaksi)/1000) transaction_frequency    \r\n  from [QRIS].[dbo].[incoming_QRIS_EXT_BRI_DAILY]\r\n  where \r\n    datediff(MONTH, trx_date,getdate()) <= 6 AND RC = '00'\r\n    --and convert(varchar(7), [date],120) >= '2023-06'\r\n  group by \r\n    trx_date\r\n)\r\nselect\r\nyear([trx_date]) as y,\r\nmonth([trx_date]) as m\r\n, SUBSTRING(convert(varchar,[trx_date],7),1,3) as trx_date\r\n ,sum(transaction_frequency) metrics_value\r\nfrom a\r\ngroup by year([trx_date]), month([trx_date]), SUBSTRING(convert(varchar,[trx_date],7),1,3)\r\norder by year([trx_date]), month([trx_date]), SUBSTRING(convert(varchar,[trx_date],7),1,3)\r\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          },
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "with a as (\r\n  select \r\n    TANGGAL_TRANSAKSI,\r\n    convert(decimal(18,2), sum(TRANSACTION_TOTAL)/1000) as transaction_frequency    \r\n  from QRIS.dbo.TRANSAKSI_MPM_OFF_US_SUMMARY_DAILY_SUCCESS_ONLY\r\n  where \r\n    datediff(MONTH, TANGGAL_TRANSAKSI, getdate()) <= 6\r\n    --and rc ='00'\r\n    --and convert(varchar(7), [date],120) >= '2023-06'\r\n  group by \r\n    TANGGAL_TRANSAKSI\r\n),\r\nb as (\r\n  select\r\n    year(a.TANGGAL_TRANSAKSI) as y,\r\n    month(a.TANGGAL_TRANSAKSI) as m,\r\n    SUBSTRING(convert(varchar, a.TANGGAL_TRANSAKSI, 7), 1, 3) as trx_date,\r\n    sum(a.transaction_frequency) as metrics_value\r\n  from a\r\n  group by year(a.TANGGAL_TRANSAKSI), month(a.TANGGAL_TRANSAKSI), SUBSTRING(convert(varchar, a.TANGGAL_TRANSAKSI, 7), 1, 3)\r\n)\r\nselect y, m, trx_date, metrics_value \r\nfrom b \r\nwhere m in (1, 2, 3, 4);\r\n",
+            "refId": "B",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Summary Frekuensi Transaksi EDC Monthly (Ribu Transaksi) ",
+        "transparent": true,
+        "type": "volkovlabs-echarts-panel"
+      },
+      {
+        "datasource": {
+          "type": "mssql",
+          "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 12,
+          "w": 12,
+          "x": 12,
+          "y": 62
+        },
+        "id": 10,
+        "options": {
+          "baidu": {
+            "callback": "bmapReady",
+            "key": ""
+          },
+          "editor": {
+            "format": "auto",
+            "height": 600
+          },
+          "editorMode": "visual",
+          "gaode": {
+            "key": "",
+            "plugin": "AMap.Scale,AMap.ToolBar"
+          },
+          "getOption": "const series = data.series.map((s) => {\n  const sData = s.fields.find((f) => f.type === 'metrics_value').values.buffer || s.fields.find((f) => f.type === 'metrics_value').values;\n  const sTime = s.fields.find((f) => f.type === 'trx_date').values.buffer || s.fields.find((f) => f.type === 'trx_date').values;\n\n  return {\n    name: s.refId,\n    type: 'line',\n    showSymbol: false,\n    areaStyle: {\n      opacity: 0.1,\n    },\n    lineStyle: {\n      width: 1,\n    },\n    data: sData.map((d, i) => [sTime[i], d.toFixed(2)]),\n  };\n});\n\n/**\n * Enable Data Zoom by default\n */\nsetTimeout(() => echartsInstance.dispatchAction({\n  type: 'takeGlobalCursor',\n  key: 'dataZoomSelect',\n  dataZoomSelectActive: true,\n}), 500);\n\n/**\n * Update Time Range on Zoom\n */\nechartsInstance.on('datazoom', function (params) {\n  const startValue = params.batch[0]?.startValue;\n  const endValue = params.batch[0]?.endValue;\n  locationService.partial({ from: startValue, to: endValue });\n});\n\nreturn {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n  },\n  legend: {\n    left: '0',\n    bottom: '0',\n    data: data.series.map((s) => s.refId),\n    textStyle: {\n      color: 'rgba(128, 128, 128, .9)',\n    },\n  },\n  toolbox: {\n    feature: {\n      dataZoom: {\n        yAxisIndex: 'none',\n        icon: {\n          zoom: 'path://',\n          back: 'path://',\n        },\n      },\n      saveAsImage: {},\n    }\n  },\n  xAxis: {\n    type: 'time',\n  },\n  yAxis: {\n    type: 'value',\n    min: 'dataMin',\n  },\n  grid: {\n    left: '2%',\n    right: '2%',\n    top: '2%',\n    bottom: 24,\n    containLabel: true,\n  },\n  series,\n};",
+          "google": {
+            "callback": "gmapReady",
+            "key": ""
+          },
+          "map": "none",
+          "renderer": "canvas",
+          "themeEditor": {
+            "config": "{\r\n  \"color\": [\r\n    \"#27727b\",\r\n    \"#fcce10\",\r\n    \"#c1232b\",\r\n    \"#e87c25\",\r\n    \"#b5c334\",\r\n    \"#fe8463\",\r\n    \"#9bca63\",\r\n    \"#fad860\",\r\n    \"#f3a43b\",\r\n    \"#60c0dd\",\r\n    \"#d7504b\",\r\n    \"#c6e579\",\r\n    \"#f4e001\",\r\n    \"#f0805a\",\r\n    \"#26c0c0\"\r\n  ],\r\n  \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n  \"textStyle\": {},\r\n  \"title\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#27727b\"\r\n    },\r\n    \"subtextStyle\": {\r\n      \"color\": \"#aaaaaa\"\r\n    }\r\n  },\r\n  \"line\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"radar\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 1\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": \"3\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false\r\n  },\r\n  \"bar\": {\r\n    \"itemStyle\": {\r\n      \"barBorderWidth\": 0,\r\n      \"barBorderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"pie\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"scatter\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"boxplot\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"parallel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"sankey\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"funnel\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"gauge\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    }\r\n  },\r\n  \"candlestick\": {\r\n    \"itemStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"color0\": \"#b5c334\",\r\n      \"borderColor\": \"#c1232b\",\r\n      \"borderColor0\": \"#b5c334\",\r\n      \"borderWidth\": 1\r\n    }\r\n  },\r\n  \"graph\": {\r\n    \"itemStyle\": {\r\n      \"borderWidth\": 0,\r\n      \"borderColor\": \"#ccc\"\r\n    },\r\n    \"lineStyle\": {\r\n      \"width\": 1,\r\n      \"color\": \"#aaa\"\r\n    },\r\n    \"symbolSize\": \"5\",\r\n    \"symbol\": \"emptyCircle\",\r\n    \"smooth\": false,\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#27727b\",\r\n      \"#fcce10\",\r\n      \"#e87c25\",\r\n      \"#b5c334\",\r\n      \"#fe8463\",\r\n      \"#9bca63\",\r\n      \"#fad860\",\r\n      \"#f3a43b\",\r\n      \"#60c0dd\",\r\n      \"#d7504b\",\r\n      \"#c6e579\",\r\n      \"#f4e001\",\r\n      \"#f0805a\",\r\n      \"#26c0c0\"\r\n    ],\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    }\r\n  },\r\n  \"map\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"geo\": {\r\n    \"itemStyle\": {\r\n      \"areaColor\": \"#dddddd\",\r\n      \"borderColor\": \"#eeeeee\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"areaColor\": \"#fe994e\",\r\n        \"borderColor\": \"#444\",\r\n        \"borderWidth\": 1\r\n      },\r\n      \"label\": {\r\n        \"color\": \"rgb(100,0,0)\"\r\n      }\r\n    }\r\n  },\r\n  \"categoryAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#ffffff\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"valueAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": false,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#ffffff\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ffffff\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"logAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"timeAxis\": {\r\n    \"axisLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\"\r\n      }\r\n    },\r\n    \"axisTick\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": \"#333\"\r\n      }\r\n    },\r\n    \"axisLabel\": {\r\n      \"show\": true,\r\n      \"color\": \"#333\"\r\n    },\r\n    \"splitLine\": {\r\n      \"show\": true,\r\n      \"lineStyle\": {\r\n        \"color\": [\r\n          \"#ccc\"\r\n        ]\r\n      }\r\n    },\r\n    \"splitArea\": {\r\n      \"show\": false,\r\n      \"areaStyle\": {\r\n        \"color\": [\r\n          \"rgba(250,250,250,0.3)\",\r\n          \"rgba(200,200,200,0.3)\"\r\n        ]\r\n      }\r\n    }\r\n  },\r\n  \"toolbox\": {\r\n    \"iconStyle\": {\r\n      \"borderColor\": \"#c1232b\"\r\n    },\r\n    \"emphasis\": {\r\n      \"iconStyle\": {\r\n        \"borderColor\": \"#e87c25\"\r\n      }\r\n    }\r\n  },\r\n  \"legend\": {\r\n    \"textStyle\": {\r\n      \"color\": \"#333333\"\r\n    }\r\n  },\r\n  \"tooltip\": {\r\n    \"axisPointer\": {\r\n      \"lineStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      },\r\n      \"crossStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"width\": 1\r\n      }\r\n    }\r\n  },\r\n  \"timeline\": {\r\n    \"lineStyle\": {\r\n      \"color\": \"#293c55\",\r\n      \"width\": 1\r\n    },\r\n    \"itemStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderWidth\": 1\r\n    },\r\n    \"controlStyle\": {\r\n      \"color\": \"#27727b\",\r\n      \"borderColor\": \"#27727b\",\r\n      \"borderWidth\": 0.5\r\n    },\r\n    \"checkpointStyle\": {\r\n      \"color\": \"#c1232b\",\r\n      \"borderColor\": \"#c23531\"\r\n    },\r\n    \"label\": {\r\n      \"color\": \"#293c55\"\r\n    },\r\n    \"emphasis\": {\r\n      \"itemStyle\": {\r\n        \"color\": \"#72d4e0\"\r\n      },\r\n      \"controlStyle\": {\r\n        \"color\": \"#27727b\",\r\n        \"borderColor\": \"#27727b\",\r\n        \"borderWidth\": 0.5\r\n      },\r\n      \"label\": {\r\n        \"color\": \"#293c55\"\r\n      }\r\n    }\r\n  },\r\n  \"visualMap\": {\r\n    \"color\": [\r\n      \"#c1232b\",\r\n      \"#fcce10\"\r\n    ]\r\n  },\r\n  \"dataZoom\": {\r\n    \"backgroundColor\": \"rgba(0,0,0,0)\",\r\n    \"dataBackgroundColor\": \"rgba(181,195,52,0.3)\",\r\n    \"fillerColor\": \"rgba(181,195,52,0.2)\",\r\n    \"handleColor\": \"#27727b\",\r\n    \"handleSize\": \"100%\",\r\n    \"textStyle\": {\r\n      \"color\": \"#999999\"\r\n    }\r\n  },\r\n  \"markPoint\": {\r\n    \"label\": {\r\n      \"color\": \"#eee\"\r\n    },\r\n    \"emphasis\": {\r\n      \"label\": {\r\n        \"color\": \"#eee\"\r\n      }\r\n    }\r\n  }\r\n}",
+            "height": 400,
+            "name": "custom"
+          },
+          "visualEditor": {
+            "code": "console.log(context);\n\n// Extracting data from the dataset\nvar categoryData = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[0];\n});\n\nvar metricsData1 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[1];\n});\n\nvar metricsData2 = context.editor.dataset.source.slice(1).map(function (item) {\n  return item[2];\n});\n\nvar metricsData3 = [];\nfor (var i = 0; i < metricsData1.length; i++) {\n  var diff = metricsData1[i] - metricsData2[i];\n  metricsData3.push(diff);\n}\n\nreturn {\n  dataset: context.editor.dataset,\n  xAxis: {\n    type: 'category',\n    data: categoryData\n  },\n  yAxis: {\n    type: 'value',\n    min: 0,\n  },\n  series: [\n    {\n      type: 'bar',\n      name: \"Volume Transaksi EDC Inflow  (Rp Milyar)\",\n      data: metricsData1,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      name: \"Volume Transaksi EDC Outflow  (Rp Milyar)\",\n      data: metricsData2,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    },\n    {\n      type: 'bar',\n      name: \"Selisih Transaksi EDC (Rp Milyar)\",\n      data: metricsData3,\n      tooltip: {\n        show: true,\n        trigger: 'axis',\n        formatter: function (params) {\n          return 'Volume Transaksi : Rp ' + params[0].value.toFixed(2) + 'Milyar';\n        }\n      }\n    }\n  ],\n  tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n      type: 'shadow'\n    }\n  },\n};\n",
+            "codeHeight": 408,
+            "dataset": [
+              {
+                "name": "trx_date",
+                "source": "inflow_frequency"
+              },
+              {
+                "name": "total_transaction_frequency",
+                "source": "inflow_frequency"
+              },
+              {
+                "name": "total_transaction_frequency",
+                "source": "outflow_volume"
+              }
+            ],
+            "series": []
+          }
+        },
+        "pluginVersion": "5.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "with  a as (\r\n  select \r\n    Tanggal\r\n    ,convert(decimal(18,2),sum(TRANSACTION_TOTAL)/1000) as transaction_frequency    \r\n  from [DataAnalytics].dbo.[incoming_NPG_EXT_BRI_DAILY]\r\n  where \r\n    datediff(MONTH, Tanggal,getdate()) <= 3 AND RC = '00'\r\n  group by \r\n    Tanggal\r\n),\r\nb as (\r\n  select \r\n    Tanggal\r\n    ,convert(decimal(18,2),sum(TRANSACTION_TOTAL)/1000) as transaction_frequency    \r\n  from KartuKredit.dbo.[incoming_CC_EXT_BRI_DAILY]\r\n  where \r\n    datediff(MONTH, Tanggal,getdate()) <= 3\r\n  group by \r\n    Tanggal\r\n)\r\nselect\r\n  year(a.Tanggal) as y,\r\n  month(a.Tanggal) as m,\r\n  SUBSTRING(convert(varchar,a.Tanggal,7),1,3) as trx_date,\r\n  sum(a.transaction_frequency + b.transaction_frequency) as total_transaction_frequency\r\nfrom \r\n  a\r\n  JOIN b ON a.Tanggal = b.Tanggal\r\ngroup by \r\n  year(a.Tanggal), \r\n  month(a.Tanggal), \r\n  SUBSTRING(convert(varchar,a.Tanggal,7),1,3)\r\norder by \r\n  year(a.Tanggal), \r\n  month(a.Tanggal), \r\n  SUBSTRING(convert(varchar,a.Tanggal,7),1,3);",
+            "refId": "inflow_frequency",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          },
+          {
+            "datasource": {
+              "type": "mssql",
+              "uid": "d630ced1-f8b6-4311-a311-28103267d72f"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "hide": false,
+            "rawQuery": true,
+            "rawSql": "with  a as (\r\n  select \r\n    [date] as trx_date\r\n    ,convert(decimal(18,2),sum(jumlah_transaksi)/1000) transaction_frequency     \r\n  from [DataAnalytics].dbo.[incoming_NPG_SummaryDaily]\r\n  where \r\n    datediff(MONTH, [date],getdate()) <= 3   \r\n    and rc ='00'\r\n    --and convert(varchar(7), [date],120) >= '2023-06'\r\n  group by \r\n    [date]\r\n),\r\nb as (\r\n\t  select \r\n    trx_date\r\n    ,convert(decimal(18,2),sum(TRANSACTION_TOTAL)/1000) transaction_frequency   \r\n  from KartuKredit.dbo.CC_OFF_US_SUMMARY_DAILY_SUCCESS_ONLY\r\n  where \r\n    datediff(MONTH, trx_date,getdate()) <= 3 --and rc ='00'\r\n    --and convert(varchar(7), [date],120) >= '2023-06'\r\n  group by \r\n    trx_date\r\n)\r\nselect\r\nyear(a.trx_date) as y,\r\nmonth(a.trx_date) as m\r\n, SUBSTRING(convert(varchar,a.trx_date,7),1,3) as trx_date\r\n  -- month([date]) monthly\r\n ,sum(a.transaction_frequency + b.transaction_frequency) as total_transaction_frequency \r\nfrom \r\n  a\r\n  JOIN b ON a.trx_date= b.trx_date\r\ngroup by \r\n  year(a.trx_date), \r\n  month(a.trx_date), \r\n  SUBSTRING(convert(varchar,a.trx_date,7),1,3)\r\norder by \r\n  year(a.trx_date), \r\n  month(a.trx_date), \r\n  SUBSTRING(convert(varchar,a.trx_date,7),1,3);",
+            "refId": "outflow_volume",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Summary Volume Transaksi EDC Monthly (Ribu Transaksi) ",
+        "transparent": true,
+        "type": "volkovlabs-echarts-panel"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-12h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Dashboard Perbandingan Transaksi Inflow & Outflow EDC dan QRIS BRI",
+    "uid": "d2224b2d-9154-4982-9a55-51cf3f71bf39",
+    "version": 36,
+    "weekStart": ""
+  }
